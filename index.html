@@ -3,30 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Save Screenshot on Mobile</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <title>Share to Instagram Story</title>
 </head>
 <body>
     <div id="content">
-        <!-- Content to capture -->
-        <h1>Hello, World!</h1>
-        <p>This is the content to capture in the screenshot.</p>
+        <h1>Share this Image to Instagram Story</h1>
     </div>
-    <button id="capture">Capture and Save Screenshot</button>
+    <button id="share">Share on Instagram Story</button>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
-        document.getElementById('capture').addEventListener('click', () => {
+        document.getElementById('share').addEventListener('click', () => {
             html2canvas(document.querySelector("#content")).then(canvas => {
-                // Convert the canvas to a data URL (JPG format)
-                const dataURL = canvas.toDataURL('image/jpeg');
+                const dataURL = canvas.toDataURL('image/png'); // Create PNG image
 
-                // Create a link element to trigger the download
-                const link = document.createElement('a');
-                link.href = dataURL;
-                link.download = 'screenshot.jpg';
+                // Convert the data URL to a Blob
+                fetch(dataURL)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        // Create a File from the Blob
+                        const file = new File([blob], "share.png", { type: "image/png" });
 
-                // For mobile devices, simulate a click on the link
-                link.click();
+                        // Use FormData to prepare the image for sharing
+                        const formData = new FormData();
+                        formData.append('image', file);
+
+                        // Attempt to open Instagram Story with the image
+                        const link = document.createElement('a');
+                        link.href = `instagram://story`;
+                        link.click();
+
+                        // Instruct the user to manually select the image from their gallery
+                        alert('Image saved. Now, please select it in Instagram Stories.');
+                    });
             });
         });
     </script>
