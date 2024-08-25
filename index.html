@@ -24,7 +24,7 @@
 
         document.getElementById('shareBtn').addEventListener('click', () => {
             const imageUrl = document.getElementById('imageToSave').src;
-            const fileName = "shared_image.jpg";
+            const fileName = "shared_image.png";
 
             fetch(imageUrl)
                 .then((response) => response.blob())
