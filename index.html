@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save Screenshot on Mobile</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div id="content">
+        <!-- Content to capture -->
+        <h1>Hello, World!</h1>
+        <p>This is the content to capture in the screenshot.</p>
+    </div>
+    <button id="capture">Capture and Save Screenshot</button>
+
+    <script>
+        document.getElementById('capture').addEventListener('click', () => {
+            html2canvas(document.querySelector("#content")).then(canvas => {
+                // Convert the canvas to a data URL (JPG format)
+                const dataURL = canvas.toDataURL('image/jpeg');
+
+                // Create a link element to trigger the download
+                const link = document.createElement('a');
+                link.href = dataURL;
+                link.download = 'screenshot.jpg';
+
+                // For mobile devices, simulate a click on the link
+                link.click();
+            });
+        });
+    </script>
+</body>
+</html>
