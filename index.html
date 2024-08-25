@@ -3,42 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Image Example</title>
+    <title>Share Image Example</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 20px;
         }
-        .download-link {
+        .share-button {
             display: inline-block;
-            margin: 10px;
+            padding: 10px 20px;
+            background-color: #00A9B4;
+            color: white;
             text-decoration: none;
-        }
-        .download-link img {
-            max-width: 100%;
-            height: auto;
-            border: 2px solid #ccc;
             border-radius: 5px;
-        }
-        .download-link:hover img {
-            border-color: #00A9B4;
+            cursor: pointer;
+            border: none;
         }
     </style>
 </head>
 <body>
-    <h1>Download Image Example</h1>
-    <p>Click the image below to download it:</p>
+    <h1>Share Image Example</h1>
+    <p>Click the button below to share the image:</p>
 
-    <!-- Link for downloading the image -->
-    <a class="download-link" href="image.png" download="downloaded-image.jpg">
-        <img src="image.png" alt="Description of image">
-    </a>
+    <!-- Share Button -->
+    <button class="share-button" id="shareButton">Share Image</button>
 
-    <!-- Optional: Another image to download -->
-    <a class="download-link" href="image.png" download="another-image.jpg">
-        <img src="image.png" alt="Description of another image">
-    </a>
+    <script>
+        document.getElementById('shareButton').addEventListener('click', async () => {
+            try {
+                const imageUrl = 'image.png'; // Update with your image URL
+                const shareData = {
+                    title: 'Check out this image!',
+                    text: 'Here is an image I wanted to share with you.',
+                    url: imageUrl
+                };
 
+                if (navigator.share) {
+                    await navigator.share(shareData);
+                    console.log('Image shared successfully');
+                } else {
+                    console.log('Share API not supported on this browser.');
+                }
+            } catch (error) {
+                console.error('Error sharing:', error);
+            }
+        });
+    </script>
 </body>
 </html>
