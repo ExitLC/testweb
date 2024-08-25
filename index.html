@@ -8,34 +8,27 @@
 <body>
     <div id="content">
         <h1>Share this Image to Instagram Story</h1>
+        <!-- Content to capture -->
+        <p>This is the content that will be converted into an image.</p>
     </div>
-    <button id="share">Share on Instagram Story</button>
+    <button id="share">Save and Share on Instagram Story</button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         document.getElementById('share').addEventListener('click', () => {
             html2canvas(document.querySelector("#content")).then(canvas => {
-                const dataURL = canvas.toDataURL('image/png'); // Create PNG image
+                const dataURL = canvas.toDataURL('image/png');
+                
+                // Create a download link for the image
+                const link = document.createElement('a');
+                link.href = dataURL;
+                link.download = 'image.png';
+                link.click();
 
-                // Convert the data URL to a Blob
-                fetch(dataURL)
-                    .then(res => res.blob())
-                    .then(blob => {
-                        // Create a File from the Blob
-                        const file = new File([blob], "share.png", { type: "image/png" });
-
-                        // Use FormData to prepare the image for sharing
-                        const formData = new FormData();
-                        formData.append('image', file);
-
-                        // Attempt to open Instagram Story with the image
-                        const link = document.createElement('a');
-                        link.href = `instagram-stories://share`;
-                        link.click();
-
-                        // Instruct the user to manually select the image from their gallery
-                        alert('Image saved. Now, please select it in Instagram Stories.');
-                    });
+                // Redirect to Instagram Stories after a short delay
+                setTimeout(() => {
+                    window.location.href = 'instagram://story';
+                }, 1000);
             });
         });
     </script>
