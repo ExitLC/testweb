@@ -3,34 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Share to Instagram Story</title>
+    <title>Download Image Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .download-link {
+            display: inline-block;
+            margin: 10px;
+            text-decoration: none;
+        }
+        .download-link img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+        .download-link:hover img {
+            border-color: #00A9B4;
+        }
+    </style>
 </head>
 <body>
-    <div id="content">
-        <h1>Share this Image to Instagram Story</h1>
-        <!-- Content to capture -->
-        <p>This is the content that will be converted into an image.</p>
-    </div>
-    <button id="share">Save and Share on Instagram Story</button>
+    <h1>Download Image Example</h1>
+    <p>Click the image below to download it:</p>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script>
-        document.getElementById('share').addEventListener('click', () => {
-            html2canvas(document.querySelector("#content")).then(canvas => {
-                const dataURL = canvas.toDataURL('image/png');
-                
-                // Create a download link for the image
-                const link = document.createElement('a');
-                link.href = dataURL;
-                link.download = 'image.png';
-                link.click();
+    <!-- Link for downloading the image -->
+    <a class="download-link" href="image.png" download="downloaded-image.jpg">
+        <img src="image.png" alt="Description of image">
+    </a>
 
-                // Redirect to Instagram Stories after a short delay
-                setTimeout(() => {
-                    window.location.href = 'instagram://story';
-                }, 1000);
-            });
-        });
-    </script>
+    <!-- Optional: Another image to download -->
+    <a class="download-link" href="image.png" download="another-image.jpg">
+        <img src="image.png" alt="Description of another image">
+    </a>
+
 </body>
 </html>
